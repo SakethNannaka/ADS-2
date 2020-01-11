@@ -25,7 +25,7 @@ public class WordNet {
      * @throws IOException
      */
         public void parseSynsets() throws IOException{
-            BufferedReader in = new BufferedReader(new FileReader("synsets.txt"));
+            BufferedReader in = new BufferedReader(new FileReader("synsets3.txt"));
         //Assuming you have a text file in D drive
         String strCurrentLine;
         
@@ -49,7 +49,7 @@ public class WordNet {
      * @throws IOException
      */
    public void parseHypernyms() throws IOException{
-        BufferedReader in = new BufferedReader(new FileReader("hypernyms.txt"));
+        BufferedReader in = new BufferedReader(new FileReader("hypernyms3InvalidCycle.txt"));
         String strCurrentLine;
         while ((strCurrentLine = in.readLine()) != null) {
             String []temp = strCurrentLine.split(",",2);
@@ -81,11 +81,11 @@ public class WordNet {
 
     // System.out.println("hypernyms :"+HypernymsMap.size());
 
-    // public static void main(String[] args) throws IOException {
-    //     PickTextFiles obj = new PickTextFiles();
-    //     obj.parseHypernyms();
-    //     System.out.println(obj.HypernymsMap.get(1)+" : "+obj.HypernymsMap.get(82191));
-    // }
+    public static void main(String[] args) throws IOException {
+        WordNet obj = new WordNet();
+        obj.parseHypernyms();
+        System.out.println(obj.HypernymsMap.get(1)+" : "+obj.HypernymsMap.get(82191));
+    }
 }
 
 

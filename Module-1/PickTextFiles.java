@@ -65,27 +65,8 @@ public class WordNet {
         }
             
         }
-
-        // }
-        // vertices++;
-        // HypernymsMap= new String[vertices];
-         // BufferedReader in1 = new BufferedReader(new FileReader("hypernyms.txt"));
-         // int i=0;
-         // while ((strCurrentLine = in1.readLine()) != null) {
-         //     HypernymsMap[i]= in1.readLine();
-         //     i++;
-         // }
-
-
     }
 
-    // System.out.println("hypernyms :"+HypernymsMap.size());
-
-    // public static void main(String[] args) throws IOException {
-    //     PickTextFiles obj = new PickTextFiles();
-    //     obj.parseHypernyms();
-    //     System.out.println(obj.HypernymsMap.get(1)+" : "+obj.HypernymsMap.get(82191));
-    // }
 }
 
 
