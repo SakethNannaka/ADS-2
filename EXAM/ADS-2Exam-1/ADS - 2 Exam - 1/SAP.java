@@ -93,13 +93,7 @@ public class SAP {
 		int a = length(v,w);
 		return ancestor(sapVertices[0],sapVertices[1]);
 	}
-	  public int indegree(int v) {
-        validateVertex(v);
-        return indegree[v];
-    }
-
-
-
+	
 	public static void main(String[] args) throws IOException{
 		WordNet wordnet = new WordNet();
         wordnet.parseHypernyms();

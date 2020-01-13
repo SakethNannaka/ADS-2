@@ -66,7 +66,7 @@ public class Solution{
 
 
 
-        System.out.println(obj.IDS.get(1));
+        System.out.println(obj.IDS.get(12345));
 
     //     ArrayList<Integer> id = new ArrayList<>();
     //     File file = new File("emails.txt");
