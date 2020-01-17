@@ -5,10 +5,16 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.File;
+// import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
+
+
+/**
+ * Class : WordNet
+ * @author Saketh Nannaka
+ */
 public class WordNet{
     Digraph G;
     HashMap <Integer ,ArrayList<String>>SynsetsMap = new HashMap<>();
@@ -19,9 +25,9 @@ public class WordNet{
 
     //Constructor takes the name of the two input files
 
-    public WordNet() throws IOException{
-        parseSynsets();
-        parseHypernyms();
+    public WordNet(String F1 , String F2) throws IOException{
+        parseSynsets(F1);
+        parseHypernyms(F2);
         G = new Digraph(HypernymsMap.size());
         loadDiGraph();
         sap = new SAP(G);
@@ -32,8 +38,8 @@ public class WordNet{
      * @param FileName
      * @throws IOException
      */
-        public void parseSynsets() throws IOException{
-        BufferedReader in = new BufferedReader(new FileReader("synsets.txt"));
+        public void parseSynsets(String fileString) throws IOException{
+        BufferedReader in = new BufferedReader(new FileReader(fileString));
         String strCurrentLine;
         
         while ((strCurrentLine = in.readLine()) != null) {
@@ -57,8 +63,8 @@ public class WordNet{
      * @param FileName1
      * @throws IOException
      */
-   public void parseHypernyms() throws IOException{
-        BufferedReader in = new BufferedReader(new FileReader("hypernyms.txt"));
+   public void parseHypernyms(String fStringS) throws IOException{
+        BufferedReader in = new BufferedReader(new FileReader(fStringS));
         String strCurrentLine;
         while ((strCurrentLine = in.readLine()) != null) {
             String []temp = strCurrentLine.split(",",2);
@@ -75,7 +81,9 @@ public class WordNet{
             
         }
     }
-
+    /**
+     * This method loads the hypernyms into the diGraph.
+     */
     public void loadDiGraph(){
           
         for (int v = 0;v<HypernymsMap.size();v++ ) {
@@ -125,7 +133,12 @@ public class WordNet{
             return sap.length(a,b);
         }
 
-    //
+    /**
+     * This method returns the Shortest ancestor name b/w to wordnet nouns.
+     * @param nounA
+     * @param nounB
+     * @return
+     */
     public String sap(String nounA ,String nounB){
         int a = -1;
         int b = -1;
@@ -145,7 +158,7 @@ public class WordNet{
     }
     //do testing of this class
     public static void main(String[] args) throws IOException{
-        WordNet wordnet = new WordNet();
+        WordNet wordnet = new WordNet("synsets.txt","hypernyms.txt");
         System.out.println(wordnet.distance("1530s","1900s"));
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(wordnet.sap("1530s","1900s"));
@@ -153,6 +166,10 @@ public class WordNet{
         System.out.println(wordnet.sap("24/7","9/11"));
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(wordnet.sap("1860s","1900s"));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(wordnet.sap("blastocyst","blastodermic_vessicle"));
+
+        
         // System.out.println(wordnet.nouns);
         // System.out.println(wordnet.G.toString());
         // System.out.println(wordnet.synsetsLog.get(0));
