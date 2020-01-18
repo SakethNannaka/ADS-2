@@ -38,7 +38,7 @@ public class WordNet{
      * @param FileName
      * @throws IOException
      */
-        public void parseSynsets(String fileString) throws IOException{
+        private void parseSynsets(String fileString) throws IOException{
         BufferedReader in = new BufferedReader(new FileReader(fileString));
         String strCurrentLine;
         
@@ -63,7 +63,7 @@ public class WordNet{
      * @param FileName1
      * @throws IOException
      */
-   public void parseHypernyms(String fStringS) throws IOException{
+   private void parseHypernyms(String fStringS) throws IOException{
         BufferedReader in = new BufferedReader(new FileReader(fStringS));
         String strCurrentLine;
         while ((strCurrentLine = in.readLine()) != null) {
@@ -84,7 +84,7 @@ public class WordNet{
     /**
      * This method loads the hypernyms into the diGraph.
      */
-    public void loadDiGraph(){
+    private void loadDiGraph(){
           
         for (int v = 0;v<HypernymsMap.size();v++ ) {
             try{

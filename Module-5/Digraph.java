@@ -39,20 +39,20 @@ public class Digraph{
     }
 
 
-    public static void main(String[] args) throws IOException{
-        WordNet wordnet = new WordNet();
-        // wordnet.parseHypernyms();
-        Digraph  di       = new Digraph(wordnet.HypernymsMap.size());
-        for (int v = 0;v<wordnet.HypernymsMap.size();v++ ) {
-        	try{
-        		for(int w : wordnet.HypernymsMap.get(v))
-        	{
-				di.addEdge(v,w);
-        	}
+    // public static void main(String[] args) throws IOException{
+    //     WordNet wordnet = new WordNet();
+    //     // wordnet.parseHypernyms();
+    //     Digraph  di       = new Digraph(wordnet.HypernymsMap.size());
+    //     for (int v = 0;v<wordnet.HypernymsMap.size();v++ ) {
+    //     	try{
+    //     		for(int w : wordnet.HypernymsMap.get(v))
+    //     	{
+				// di.addEdge(v,w);
+    //     	}
 
-        	}catch(Exception NullPointerException){
-        	}
-        }
-        System.out.println(di.toString());		
-    }
+    //     	}catch(Exception NullPointerException){
+    //     	}
+    //     }
+    //     System.out.println(di.toString());		
+    // }
 }

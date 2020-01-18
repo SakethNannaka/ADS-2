@@ -9,11 +9,11 @@ import java.util.ArrayList;
 public class SAP {
 
 	//Fields
-	Digraph di;      //Variable di of type Digraph
-	boolean [] b1 ;
-	boolean [] b2 ;
-	int minIndex = -1;
-	int [] sapVertices = new int[2] ;
+	private Digraph di;      //Variable di of type Digraph
+	private boolean [] b1 ;
+	private boolean [] b2 ;
+	private int minIndex = -1;
+	private int [] sapVertices = new int[2] ;
 	
 	//Methods
 
@@ -97,41 +97,41 @@ public class SAP {
 
 
 
-	public static void main(String[] args) throws IOException{
-		WordNet wordnet = new WordNet();
-        wordnet.parseHypernyms();
-        Digraph  di       = new Digraph(wordnet.HypernymsMap.size());
-        for (int v = 0;v<wordnet.HypernymsMap.size();v++ ) {
-        	try{
-        		for(int w : wordnet.HypernymsMap.get(v))
-        	{
-				di.addEdge(v,w);
-        	}
+	// public static void main(String[] args) throws IOException{
+	// 	WordNet wordnet = new WordNet();
+ //        wordnet.parseHypernyms();
+ //        Digraph  di       = new Digraph(wordnet.HypernymsMap.size());
+ //        for (int v = 0;v<wordnet.HypernymsMap.size();v++ ) {
+ //        	try{
+ //        		for(int w : wordnet.HypernymsMap.get(v))
+ //        	{
+	// 			di.addEdge(v,w);
+ //        	}
 
-        	}catch(Exception NullPointerException){
-        	}
-        }
-        // System.out.println(di.toString());
-		SAP sap = new SAP(di);
-		System.out.println("1 : "+sap.length(3,1000));
-		System.out.println("2 : "+sap.ancestor(3,123));
-		ArrayList<Integer> v = new ArrayList<>();
-		ArrayList<Integer> w = new ArrayList<>();
-		v.add(1);
-		v.add(2);
-		v.add(3);
-		v.add(4);
+ //        	}catch(Exception NullPointerException){
+ //        	}
+ //        }
+ //        // System.out.println(di.toString());
+	// 	SAP sap = new SAP(di);
+	// 	System.out.println("1 : "+sap.length(3,1000));
+	// 	System.out.println("2 : "+sap.ancestor(3,123));
+	// 	ArrayList<Integer> v = new ArrayList<>();
+	// 	ArrayList<Integer> w = new ArrayList<>();
+	// 	v.add(1);
+	// 	v.add(2);
+	// 	v.add(3);
+	// 	v.add(4);
 
-		w.add(987);
-		w.add(978);
-		w.add(879);
-		w.add(9);
-
-
+	// 	w.add(987);
+	// 	w.add(978);
+	// 	w.add(879);
+	// 	w.add(9);
 
 
-		System.out.println("3 : "+sap.length(v,w));
-		System.out.println("4 : "+sap.ancestor(v,w));
 
-	}
+
+	// 	System.out.println("3 : "+sap.length(v,w));
+	// 	System.out.println("4 : "+sap.ancestor(v,w));
+
+	// }
 }
