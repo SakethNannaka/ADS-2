@@ -1,7 +1,7 @@
 import java.io.IOException;
 public class Outcast {
 
-    WordNet wordnet;
+    private WordNet wordnet;
 	
     public Outcast(WordNet wordnet) {
     	this.wordnet = wordnet;

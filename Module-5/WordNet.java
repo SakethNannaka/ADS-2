@@ -10,18 +10,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
 
-
 /**
  * Class : WordNet
  * @author Saketh Nannaka
  */
 public class WordNet{
-    Digraph G;
-    HashMap <Integer ,ArrayList<String>>SynsetsMap = new HashMap<>();
-    HashMap <Integer ,ArrayList<Integer>>HypernymsMap = new HashMap<>();
-    ArrayList<synsets> synsetsLog  = new ArrayList<>();
-    ArrayList<String> nouns = new ArrayList<>();
-    SAP sap ;
+    private Digraph G;
+    private HashMap <Integer ,ArrayList<String>>SynsetsMap = new HashMap<>();
+    private HashMap <Integer ,ArrayList<Integer>>HypernymsMap = new HashMap<>();
+    private ArrayList<synsets> synsetsLog  = new ArrayList<>();
+    private ArrayList<String> nouns = new ArrayList<>();
+    private SAP sap ;
 
     //Constructor takes the name of the two input files
 
@@ -38,7 +37,7 @@ public class WordNet{
      * @param FileName
      * @throws IOException
      */
-        public void parseSynsets(String fileString) throws IOException{
+        private void parseSynsets(String fileString) throws IOException{
         BufferedReader in = new BufferedReader(new FileReader(fileString));
         String strCurrentLine;
         
@@ -63,7 +62,7 @@ public class WordNet{
      * @param FileName1
      * @throws IOException
      */
-   public void parseHypernyms(String fStringS) throws IOException{
+   private void parseHypernyms(String fStringS) throws IOException{
         BufferedReader in = new BufferedReader(new FileReader(fStringS));
         String strCurrentLine;
         while ((strCurrentLine = in.readLine()) != null) {
@@ -84,7 +83,7 @@ public class WordNet{
     /**
      * This method loads the hypernyms into the diGraph.
      */
-    public void loadDiGraph(){
+    private void loadDiGraph(){
           
         for (int v = 0;v<HypernymsMap.size();v++ ) {
             try{
