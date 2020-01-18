@@ -168,8 +168,12 @@ public class WordNet{
         System.out.println(wordnet.sap("1860s","1900s"));
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println(wordnet.sap("blastocyst","blastodermic_vessicle"));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(wordnet.distance("1530s","decennary"));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(wordnet.sap("apple_juice","orange_juice"));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        
         // System.out.println(wordnet.nouns);
         // System.out.println(wordnet.G.toString());
         // System.out.println(wordnet.synsetsLog.get(0));
