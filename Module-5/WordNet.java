@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class WordNet{
     private Digraph G;
     private HashMap <Integer ,ArrayList<String>>SynsetsMap = new HashMap<>();
+    private HashMap <String,Integer>nounIndex = new HashMap<>();
     private HashMap <Integer ,ArrayList<Integer>>HypernymsMap = new HashMap<>();
     private ArrayList<synsets> synsetsLog  = new ArrayList<>();
     private ArrayList<String> nouns = new ArrayList<>();
@@ -49,6 +50,7 @@ public class WordNet{
             for (int i = 0; i < temp1.length; i++) {
                 vArrayList.add(temp1[i]);
                 nouns.add(temp1[i]);
+                nounIndex.put(temp1[i],key);
             }
             // vArrayList.add(temp[2]);
             SynsetsMap.put(key, vArrayList);
@@ -118,16 +120,19 @@ public class WordNet{
     public int distance(String nounA, String nounB) {
         int a = -1;
         int b = -1;
-        for (synsets s : synsetsLog) {
-            if (s.ContainsNoun(nounA)) {
-                   a = s.n;
-            }
-        }
-        for (synsets s : synsetsLog) {
-            if (s.ContainsNoun(nounB)) {
-                    b = s.n;
-                    }
-                }
+        a=nounIndex.get(nounA);
+        b=nounIndex.get(nounB);
+
+        // for (synsets s : synsetsLog) {
+        //     if (s.ContainsNoun(nounA)) {
+        //            a = s.n;
+        //     }
+        // }
+        // for (synsets s : synsetsLog) {
+        //     if (s.ContainsNoun(nounB)) {
+        //             b = s.n;
+        //             }
+        //         }
             
             return sap.length(a,b);
         }
@@ -141,16 +146,19 @@ public class WordNet{
     public String sap(String nounA ,String nounB){
         int a = -1;
         int b = -1;
-        for (synsets s : synsetsLog) {
-            if (s.ContainsNoun(nounA)) {
-                   a = s.n;
-            }
-        }
-        for (synsets s : synsetsLog) {
-            if (s.ContainsNoun(nounB)) {
-                    b = s.n;
-                    }
-                }
+        a=nounIndex.get(nounA);
+        b=nounIndex.get(nounB);
+
+        // for (synsets s : synsetsLog) {
+        //     if (s.ContainsNoun(nounA)) {
+        //            a = s.n;
+        //     }
+        // }
+        // for (synsets s : synsetsLog) {
+        //     if (s.ContainsNoun(nounB)) {
+        //             b = s.n;
+        //             }
+        //         }
         int ancestor = sap.ancestor(a,b);
         return SynsetsMap.get(ancestor).get(1);
 

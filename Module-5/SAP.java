@@ -5,6 +5,8 @@
  */
 import java.io.IOException;
 import java.util.ArrayList;
+import edu.princeton.cs.algs4.*;
+
 
 public class SAP {
 
@@ -20,9 +22,15 @@ public class SAP {
 	/**
 	 * Constructor :SAP
 	 */
+
+
 	public SAP(Digraph G){
 		di = G;
 	}
+
+	// public SAP(edu.princeton.cs.algs4.Digraph G){
+	// 	di = G;
+	// }
 
 	/**
 	 * This method returns the SAP length b/w @param v and @param w
