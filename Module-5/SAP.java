@@ -3,9 +3,10 @@
  * @author Saketh Nannaka
  * This class is to implement the methods which find shortest commmon ancestor and SAP length
  */
+import edu.princeton.cs.algs4.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import edu.princeton.cs.algs4.*;
+
 
 
 public class SAP {

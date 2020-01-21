@@ -2,8 +2,8 @@
 *Class : WordNet
 *@author : Saketh Nannaka
 */
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.In;
+// import edu.princeton.cs.algs4.Digraph;
+// import edu.princeton.cs.algs4.In;
 import java.lang.IllegalArgumentException;
 // import java.io.IOException;
 import java.util.ArrayList;

@@ -1,4 +1,5 @@
-import java.io.IOException;
+// import edu.princeton.cs.algs4.*;
+// import java.io.IOException;
 public class Outcast {
 
     private WordNet wordnet;
@@ -29,14 +30,19 @@ public class Outcast {
         return outcast;
     }
     
-    public static void main(String[] args) throws IOException{
-        
-    	Outcast out = new Outcast(new WordNet("synsets.txt", "hypernyms.txt"));
-    	String[] nouns = new String[]{"water","soda","milk","orange_juice","apple_juice","tea","coffee","bed"};
-    	System.out.println(out.outcast(nouns));
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        String[] nouns1 = new String[]{"cat","cheetah","dog","wolf","albatross","horse","zebra","lemur","orangutan","chimpanzee"};
-        System.out.println(out.outcast(nouns1));
+    // public static void main(String[] args) {
+		
+	// 	try {
+	// 	Outcast out = new Outcast(new WordNet("synsets.txt", "hypernyms.txt"));
+    // 	String[] nouns = new String[]{"water","soda","milk","orange_juice","apple_juice","tea","coffee","bed"};
+    // 	System.out.println(out.outcast(nouns));
+    //     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    //     String[] nouns1 = new String[]{"cat","cheetah","dog","wolf","albatross","horse","zebra","lemur","orangutan","chimpanzee"};
+    //     System.out.println(out.outcast(nouns1));
 
-    }
+	// 	} catch (Exception e) {
+	// 		//TODO: handle exception
+	// 	}
+    	
+    // }
 }
