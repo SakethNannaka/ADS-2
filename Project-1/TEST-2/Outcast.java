@@ -39,6 +39,7 @@ public class Outcast {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         String[] nouns1 = new String[]{"cat","cheetah","dog","wolf","albatross","horse","zebra","lemur","orangutan","chimpanzee"};
         System.out.println(out.outcast(nouns1));
+        // System.out.println();
 
 		} catch (Exception e) {
 			//TODO: handle exception

@@ -2,8 +2,14 @@
 *Class : WordNet
 *@author : Saketh Nannaka
 */
-// import edu.princeton.cs.algs4.Digraph;
-// import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.DirectedCycle;
+import edu.princeton.cs.alg4.Bag;
+
+// import edu.princeton.cs.algs4.cycle;
+
+
 import java.lang.IllegalArgumentException;
 // import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +24,7 @@ import java.util.HashMap;
  */
 public class WordNet{
     private final Digraph G;
-    private final HashMap <Integer ,ArrayList<String>>SynsetsMap = new HashMap<>();
+    private final HashMap <Integer ,Bag<String>>SynsetsMap = new HashMap<>();
     private final HashMap <String,Integer>nounIndex = new HashMap<>();
     // private final HashMap <Integer ,ArrayList<Integer>>HypernymsMap = new HashMap<>();
     // private ArrayList<synsets> synsetsLog  = new ArrayList<>();
@@ -29,10 +35,20 @@ public class WordNet{
 
     public WordNet(String F1 , String F2){
         parseSynsets(F1);
-        // parseHypernyms(F2);
-        G = new Digraph(buildDigraph(F2,SynsetsMap.size()+1));
+        G = new Digraph(buildDigraph(F2,SynsetsMap.size()));
         // loadDiGraph();
         sap = new SAP(G);
+
+
+
+        DirectedCycle cycle = new DirectedCycle(G);
+        if (cycle.hasCycle() || !rootedDAG(G)) {
+            throw new IllegalArgumentException("The input does not correspond to a rooted DAG!");
+        }
+
+        // sap = new SAP(graph);
+
+
     }
 
      /**
@@ -61,45 +77,6 @@ public class WordNet{
         
         }
 
-        /**
-     * This methods reads the text files and puts the key value pair into the hashMap
-     * @param FileName1
-     * @throws IOException
-     */
-//    private void parseHypernyms(String fStringS){
-//             In in = new In(fStringS);
-//         while (in.hasNextLine()) {
-//             String []temp = in.readLine().split(",",2);
-//             int key = Integer.parseInt(temp[0]);
-//             if (temp.length>1) {
-//                 String [] temp1 = temp[1].split(",");
-//                 ArrayList<Integer> vArrayList = new ArrayList<>();
-//                 for (int i = 0; i < temp1.length; i++) {
-//                     int Values =Integer.parseInt(temp1[i]);
-//                 vArrayList.add(Values);
-//                 }
-//             HypernymsMap.put(key,vArrayList);
-//         }
-            
-//         }
-        
-//     }
-    /**
-     * This method loads the hypernyms into the diGraph.
-     */
-    // private void loadDiGraph(){
-          
-    //     for (int v = 0;v<HypernymsMap.size();v++ ) {
-
-    //             for(int w : HypernymsMap.get(v))
-    //         {
-    //             G.addEdge(v,w);
-    //         }
-
-    //     }
-    // }
-
-    //returns all WordNet nouns
     public Iterable<String> nouns(){
         return this.nouns;
     }
@@ -120,18 +97,6 @@ public class WordNet{
         a=nounIndex.get(nounA);
         b=nounIndex.get(nounB);
         }
-
-        // for (synsets s : synsetsLog) {
-        //     if (s.ContainsNoun(nounA)) {
-        //            a = s.n;
-        //     }
-        // }
-        // for (synsets s : synsetsLog) {
-        //     if (s.ContainsNoun(nounB)) {
-        //             b = s.n;
-        //             }
-        //         }
-            
             return sap.length(a,b);
         }
 
@@ -148,19 +113,6 @@ public class WordNet{
             a=nounIndex.get(nounA);
             b=nounIndex.get(nounB);
             }
-    
-
-
-        // for (synsets s : synsetsLog) {
-        //     if (s.ContainsNoun(nounA)) {
-        //            a = s.n;
-        //     }
-        // }
-        // for (synsets s : synsetsLog) {
-        //     if (s.ContainsNoun(nounB)) {
-        //             b = s.n;
-        //             }
-        //         }
         int ancestor = sap.ancestor(a,b);
         String temp = "";
         for(String string :SynsetsMap.get(ancestor)){
@@ -182,7 +134,19 @@ public class WordNet{
         }
         return g;
     }
+private boolean rootedDAG(Digraph g) {
+        int roots = 0;
+        for (int i = 0; i < g.V(); i++) {
+            if (!g.adj(i).iterator().hasNext()) {
+                roots++;
+                if (roots > 1) {
+                    return false;
+                }
+            }
+        }
 
+        return roots == 1;
+    }
 
     //do testing of this class
     // public static void main(String[] args) throws IOException{

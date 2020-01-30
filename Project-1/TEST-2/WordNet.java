@@ -2,10 +2,10 @@
 *Class : WordNet
 *@author : Saketh Nannaka
 */
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.In;
+// import edu.princeton.cs.algs4.Digraph;
+// import edu.princeton.cs.algs4.In;
 import java.lang.IllegalArgumentException;
-// import java.io.IOException;
+import java.io.IOException;
 import java.util.ArrayList;
 // import java.io.File;
 import java.io.BufferedReader;
@@ -30,7 +30,7 @@ public class WordNet{
     public WordNet(String F1 , String F2){
         parseSynsets(F1);
         // parseHypernyms(F2);
-        G = new Digraph(buildDigraph(F2,SynsetsMap.size()+1));
+        G = new Digraph(buildDigraph(F2,SynsetsMap.size()));
         // loadDiGraph();
         sap = new SAP(G);
     }
@@ -148,19 +148,6 @@ public class WordNet{
             a=nounIndex.get(nounA);
             b=nounIndex.get(nounB);
             }
-    
-
-
-        // for (synsets s : synsetsLog) {
-        //     if (s.ContainsNoun(nounA)) {
-        //            a = s.n;
-        //     }
-        // }
-        // for (synsets s : synsetsLog) {
-        //     if (s.ContainsNoun(nounB)) {
-        //             b = s.n;
-        //             }
-        //         }
         int ancestor = sap.ancestor(a,b);
         String temp = "";
         for(String string :SynsetsMap.get(ancestor)){
@@ -185,10 +172,12 @@ public class WordNet{
 
 
     //do testing of this class
-    // public static void main(String[] args) throws IOException{
-    //     WordNet wordnet = new WordNet("synsets.txt","hypernyms.txt");
-    //     System.out.println(wordnet.distance("1530s","1900s"));
-    //     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    public static void main(String[] args) throws IOException{
+        WordNet wordnet = new WordNet("synsets.txt","hypernyms.txt");
+        System.out.println(wordnet.distance("1530s","1900s"));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(wordnet.SynsetsMap.size());
+    }
     //     System.out.println(wordnet.sap("1530s","1900s"));
     //     System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     //     System.out.println(wordnet.sap("24/7","9/11"));
