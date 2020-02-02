@@ -1,12 +1,12 @@
+import java.util.ArrayList;
 public class BoggleSolver{
 	TrieST st;
 	public BoggleSolver(){
-		st = new TrieST();
 		}
 		    // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
-    public BoggleSolver(String[] dictionary){
-
+    public BoggleSolver(ArrayList<String> dictionary){
+		            st = new TrieST();
     				for (String istring : dictionary) {
     					String input = istring;
     					 int wordScore = 0;
@@ -33,25 +33,41 @@ public class BoggleSolver{
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
-    public Iterable<String> getAllValidWords(BoggleBoard board){
 
-    }
+
+    // public Iterable<String> getAllValidWords(BoggleBoard board){
+    	
+
+    // }
 
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
     // (You can assume the word contains only the uppercase letters A through Z.)
     public int scoreOf(String word){
-    	
+    	return (int)st.get(word);
     }
 	public static void main(String[] args) {
-				BoggleSolver s = new BoggleSolver();
 				In in =  new In("words.txt");
-				String [] dictionary = new String[3152];
-				int j = 0;
-				while(in.hasNextLine()){
-							String input = in.readLine();
-							dictionary[j++] = input;
-						}
-						System.out.println(s.st.get("LONGEST"));
-				}
-			}		
+				ArrayList<String>dictionary = new ArrayList<>();
+					while(in.hasNextLine()){
+							String name  = in.readLine();
+							// System.out.println(name);
+							dictionary.add(name);
+					}
+					try{
+					BoggleSolver s = new BoggleSolver(dictionary);
+					System.out.println(s.st.get("YOURSELF"));
+					System.out.println(s.scoreOf("YOURSELF"));
+
+					}
+					catch(Exception e){
+
+					}
+
+							
+							}
+
+	}
+
+				
+
 
