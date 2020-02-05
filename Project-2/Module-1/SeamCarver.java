@@ -1,14 +1,18 @@
 import java.awt.Color;
 import java.lang.IllegalArgumentException;
+// import edu.princeton.cs.algs4.Picture;
 public class SeamCarver {
 
 private Picture picture;
 
    // create a seam carver object based on the given picture
    public SeamCarver(Picture picture) {
-      this.picture = picture;
+        if (picture == null) {
+            throw new IllegalArgumentException();
+        }
+      this.picture = new Picture(picture);
    }
-   //@ return current picture
+   // return current picture
    public Picture picture() {
       return picture;
    }
@@ -25,6 +29,7 @@ private Picture picture;
 
    // energy of pixel at column x and row y
    public double energy(int x, int y) {
+
         if(x < 0 || x >= width() || y < 0 || y >= height()) {
                       throw new IllegalArgumentException();
 
@@ -34,9 +39,9 @@ private Picture picture;
         }
         // top(x,y+1) , bottom(x,y-1) , left(x-1,y),right(x+1,y)
         
-        int delta_X = calculateDeltaEnergy(x + 1, y, x - 1, y);
-        int delta_Y = calculateDeltaEnergy(x, y + 1, x, y - 1);
-        double energy = Math.sqrt(delta_X + delta_Y);
+        int x_delta = calculateDeltaEnergy(x + 1, y, x - 1, y);
+        int y_delta = calculateDeltaEnergy(x, y + 1, x, y - 1);
+        double energy = Math.sqrt(x_delta + y_delta);
         return energy;
    }
 
@@ -44,109 +49,128 @@ private Picture picture;
         Color c1 = picture.get(x1, y1);
         Color c2 = picture.get(x2, y2);
 
-        int r = c1.getRed() - c2.getRed();
-        int g = c1.getGreen() - c2.getGreen();
-        int b = c1.getBlue() - c2.getBlue();
+        int red = c1.getRed() - c2.getRed();
+        int green = c1.getGreen() - c2.getGreen();
+        int blue = c1.getBlue() - c2.getBlue();
 
-        int rgb = (r * r) + (g * g) + (b * b);
+        int rgb = (red * red) + (green * green) + (blue * blue);
         return rgb;
    }
-   public double[][] energyMatrix(int wid, int ht) {
-        double[][] engMat= new double[wid][ht];
-        for (int i = 0; i < wid; i++) {
-            for (int  j = 0; j < ht; j++) {
-                engMat[i][j] = energy(j, i);
+   private double[][] energyMatrix(int width, int height) {
+        double[][] energyMat= new double[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int  j = 0; j < height; j++) {
+                energyMat[i][j] = energy(j, i);
             }
         }
-        return engMat;
+        return energyMat;
     }
-public double[][] cummulativeMatrix(double[][] energy) {
+private double[][] cummulativeMatrix(double[][] energy) {
         int noOfRows = energy.length;
-        int noOfCols = energy[0].length;
-        double[][] cummulative = new double[noOfRows][noOfCols];
-        for (int i = 0; i < noOfRows; i++) {
-            for (int j = 0; j < noOfCols; j++) {
-                if (i == 0) {
-                    cummulative[i][j] = energy[i][j];
-                } else if (i > 0 && j == 0) {
-                    double small = Math.min(cummulative[i - 1][j], cummulative[i - 1][j + 1]);
-                    cummulative[i][j] = energy[i][j] + small;
-                } else if (i > 0 && j < noOfCols - 1) {
-                    double small = Math.min(cummulative[i - 1][j - 1], Math.min(cummulative[i - 1][j], cummulative[i - 1][j + 1]));
-                    cummulative[i][j] = energy[i][j] + small;
-                } else if (i > 0 && j >= noOfCols - 1) {
-                    double small = Math.min(cummulative[i - 1][j - 1], cummulative[i - 1][j]);
-                    cummulative[i][j] = energy[i][j] + small;
+        int noOfColumns = energy[0].length;
+        double[][] cummulative_Matrix = new double[noOfRows][noOfColumns];
+        for (int row = 0; row < noOfRows; row++) {
+            for (int column = 0; column < noOfColumns; column++) {
+                if (row == 0) {
+                    cummulative_Matrix[row][column] = energy[row][column];
+                } else if (row > 0 && column == 0) {
+                    double small = Math.min(cummulative_Matrix[row - 1][column], cummulative_Matrix[row - 1][column + 1]);
+                    cummulative_Matrix[row][column] = energy[row][column] + small;
+                } else if (row > 0 && column < noOfColumns - 1) {
+                    double small = Math.min(cummulative_Matrix[row - 1][column - 1], Math.min(cummulative_Matrix[row - 1][column], cummulative_Matrix[row - 1][column + 1]));
+                    cummulative_Matrix[row][column] = energy[row][column] + small;
+                } else if (row > 0 && column >= noOfColumns - 1) {
+                    double small = Math.min(cummulative_Matrix[row - 1][column - 1], cummulative_Matrix[row - 1][column]);
+                    cummulative_Matrix[row][column] = energy[row][column] + small;
                 }
             }
         }
-        return cummulative;
+        return cummulative_Matrix;
     }
-     public int[] Seam(double[][] vert) {
+     private int[] Seam(double[][] vert) {
+
         int noOfRows = vert.length;
-        int noOfCols = vert[0].length;
-        int[] array = new int[noOfRows];
+        
+        int noOfColumns = vert[0].length;
+        
+        int[] SeamArray = new int[noOfRows];
+        
         for (int i = noOfRows - 1; i > 0; i--) {
+         
             double Max = Double.MAX_VALUE;
+         
             double Min = 0;
+         
             if (i == noOfRows - 1) {
-                for (int j = 0; j < noOfCols; j++) {
+         
+                for (int j = 0; j < noOfColumns; j++) {
+                    
                     Min = vert[i][j];
+
                     if (Min < Max) {
+
                         Max = vert[i][j];
-                        array[i] = j;
+                        
+                        SeamArray[i] = j;
                     }
                 }
             }
+
             if (i < noOfRows - 1 && i > 0) {
-                int n = array[i + 1];
-                if (n - 1 >= 0 &&  n - 1 < noOfCols - 1 &&  n + 1 <= noOfCols - 1) {
+              
+                int n = SeamArray[i + 1];
+              
+                if (n - 1 >= 0 &&  n - 1 < noOfColumns - 1 &&  n + 1 <= noOfColumns - 1) {
+                 
                     Min = Math.min(vert[i][n - 1], Math.min(vert[i][n], vert[i][n + 1]));
-                    for (int j = 0; j < noOfCols; j++) {
+                 
+                    for (int j = 0; j < noOfColumns; j++) {
                         if (Min == vert[i][j]) {
-                            array[i] = j;
+                            SeamArray[i] = j;
                             break;
                         }
                     }
                 }
                 if (n - 1 < 0) {
                     Min = Math.min(vert[i][n], vert[i][n + 1]);
-                    for (int j = 0; j < noOfCols; j++) {
+                    for (int j = 0; j < noOfColumns; j++) {
                         if (Min == vert[i][j]) {
-                            array[i] = j;
+                            SeamArray[i] = j;
                             break;
                         }                        
                     }
                 }
-                if (n + 1 > noOfCols - 1) {
+                if (n + 1 > noOfColumns - 1) {
                     Min = Math.min(vert[i][n - 1], vert[i][n]);
-                    for (int j = 0; j < noOfCols; j++) {
+                    for (int j = 0; j < noOfColumns; j++) {
                         if (Min == vert[i][j]) {
-                            array[i] = j;
+                            SeamArray[i] = j;
                             break;
                         }                        
                     }
                 }    
             }
-            array[0] = array[1] - 1;
+            SeamArray[0] = SeamArray[1] - 1;
         }
-        return array;
+        return SeamArray;
     }
     /**
      * sequence of indices for horizontal seam
      */
     public int[] findHorizontalSeam() {
-        double[][] vert = energyMatrix(picture.height(), picture.width());
-        int a = vert.length;
-        int b = vert[0].length;
+        double[][] Energy_Matrix = energyMatrix(picture.height(), picture.width());
+
+        // int a = 
+        // int b = Energy_Matrix[0].length; //i.e no.of Columns
         
-        double[][] trans_Mat = new double[b][a];
-        for (int i = 0; i < b; i++) {
-            for (int j = 0; j < a; j++) {
-                trans_Mat[i][j] = vert[j][i];
+        double[][] transposeMatrix = new double[Energy_Matrix[0].length][Energy_Matrix.length];
+
+        for (int row = 0; row < Energy_Matrix.length ; row++) {
+            for (int column = 0; column < Energy_Matrix[0].length; column++) {
+                transposeMatrix[row][column] = Energy_Matrix[column][row];
             }
         }
-        return Seam(cummulativeMatrix(trans_Mat));
+        return Seam(cummulativeMatrix(transposeMatrix));
     }
  
     /**
@@ -160,7 +184,7 @@ public double[][] cummulativeMatrix(double[][] energy) {
 
     // remove horizontal seam from current picture
     public void removeHorizontalSeam(int[] seam) {
-        if (seam == null) {
+        if (seam == null || this.height() <= 1 || seam.length != this.width()) {
             throw new IllegalArgumentException();
 
         }
@@ -179,11 +203,10 @@ public double[][] cummulativeMatrix(double[][] energy) {
  
     // // remove vertical seam from current picture
     public void removeVerticalSeam(int[] seam) {
-        if (seam == null) {
+        if (seam == null || this.width() <= 1 || seam.length != this.height()) {
             throw new IllegalArgumentException();
 
         }
-
         Picture pic = new Picture(this.picture.width() - 1, this.picture.height());
         for (int i = 0; i < height(); i++) {
             for (int j = 0; j < seam[i]; j++) {
@@ -200,8 +223,8 @@ public double[][] cummulativeMatrix(double[][] energy) {
    //  unit testing
    public static void main(String[] args) throws IllegalArgumentException {
 
-      Picture pic = new Picture("chameleon.png");
+      Picture pic = new Picture("6x5.png");
       SeamCarver sc = new SeamCarver(pic);
-      System.out.println(sc.findVerticalSeam());
-  }
+      System.out.println(sc.energy(1,2));
+   }
 }

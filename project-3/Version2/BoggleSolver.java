@@ -5,28 +5,10 @@ public class BoggleSolver{
 		}
 		    // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
-    public BoggleSolver(ArrayList<String> dictionary){
+    public BoggleSolver(String[] dictionary){
 		            st = new TrieST();
-    				for (String istring : dictionary) {
-    					String input = istring;
-    					 int wordScore = 0;
-							int length = input.length(); 
-							if (length <= 4) {
-								wordScore += 1;
-							}
-							if (length == 5) {
-							wordScore += 2;
-							}
-							if (length == 6) {
-							wordScore += 3;
-							}
-							if (length == 7) {
-							wordScore += 5;
-							}
-							if (length >= 8) {
-							wordScore += 11;
-							}
-						    st.put(input,wordScore);
+    				for (String input : dictionary) { 
+						    st.put(input,input.length());
     				}
 
     	                   
@@ -43,16 +25,37 @@ public class BoggleSolver{
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
     // (You can assume the word contains only the uppercase letters A through Z.)
     public int scoreOf(String word){
-    	return (int)st.get(word);
+
+    	                    int wordScore = 0;
+							int length = (int)st.get(word); 
+							if (length <= 4) {
+								wordScore += 1;
+							}
+							if (length == 5) {
+							wordScore += 2;
+							}
+							if (length == 6) {
+							wordScore += 3;
+							}
+							if (length == 7) {
+							wordScore += 5;
+							}
+							if (length >= 8) {
+							wordScore += 11;
+							}
+    	return wordScore;
     }
 	public static void main(String[] args) {
 				In in =  new In("words.txt");
-				ArrayList<String>dictionary = new ArrayList<>();
+				String[] dictionary = new String[6014];
+				int j = 0;
 					while(in.hasNextLine()){
 							String name  = in.readLine();
 							// System.out.println(name);
-							dictionary.add(name);
+							dictionary[j++]=name;
 					}
+					System.out.println(dictionary[90]);
+
 					try{
 					BoggleSolver s = new BoggleSolver(dictionary);
 					System.out.println(s.st.get("YOURSELF"));
@@ -62,6 +65,8 @@ public class BoggleSolver{
 					catch(Exception e){
 
 					}
+					System.out.println(dictionary[90]);
+					
 
 							
 							}
